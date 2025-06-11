@@ -54,7 +54,10 @@ const verifyOtp = async (req, res) => {
       return res.status(400).json({ error: 'OTP expired' });
     }
 
+    const uid = Math.floor(1000000 + Math.random() * 9000000);
+
     const user = new User ({
+      uid,
       mobile
     });
     await user.save();
