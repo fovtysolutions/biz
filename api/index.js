@@ -1,11 +1,18 @@
 require("dotenv").config();
 const express = require("express");
+const cors = require('cors');
 const { connectDB, mongoStatus } = require("../config/db");
 
 const app = express();
 app.use(express.json());
 app.use(express.urlencoded({ extended: true })); 
 connectDB();
+app.use(cors({
+  origin: 'http://localhost:8080', 
+  methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+  credentials: true 
+}));
+
 const authroutes = require("../routes/AuthRoutes");
 const testingroutes2 = require("../routes/tessstRoutes");
 
