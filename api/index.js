@@ -1,6 +1,6 @@
 require("dotenv").config();
 const express = require("express");
-const { connectDB } = require("../config/db");
+const { connectDB, mongoStatus } = require("../config/db");
 
 const app = express();
 app.use(express.json());
@@ -17,7 +17,7 @@ app.use("/testing2/", testingroutes2);
 
 //root route
 app.get("/", (req, res) => {
-  res.send("App works properly!");
+  res.send(`App works properly! Mongo connection ${mongoStatus.message}`);
 });
 
 const PORT = process.env.PORT || 5000;

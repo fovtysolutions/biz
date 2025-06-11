@@ -3,6 +3,7 @@ const User = require("../models/userModel");
 const auth = require("../config/auth");
 const nodemailer = require('nodemailer');
 const bcrypt = require('bcrypt');
+require("dotenv").config();
 
 const sendOtpToMobile = async (mobile) => {
   const otp = Math.floor(100000 + Math.random() * 900000); 
@@ -68,12 +69,12 @@ const verifyOtp = async (req, res) => {
 };
 
 const transporter = nodemailer.createTransport({
-  host: "mail.fovtysolutions.com", 
-  port: 465, 
-  secure: true,
+  host: process.env.EMAIL_HOST, 
+  port: process.env.EMAIL_PORT, 
+  secure: process.env.EMAIL_SECURE,
   auth: {
-    user: "testing@fovtysolutions.com", 
-    pass: "Omsairam@1234"
+    user: process.env.EMAIL_USER, 
+    pass: process.env.EMAIL_PASSWORD
   },
   tls: {
     rejectUnauthorized: false 
@@ -89,7 +90,7 @@ const withEmail = async (req, res) => {
     }
 
     const mailOptions = {
-      from: 'testing@fovtysolutions.com',
+      from: process.env.EMAIL_FROM,
       to: email,
       subject: 'Welcome to Our App!',
       html: `<h3>Hello!</h3><p>Your email <b>${email}</b> was successfully registered.</p>`
