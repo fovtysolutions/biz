@@ -8,7 +8,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true })); 
 connectDB();
 app.use(cors({
-  origin: 'http://localhost:8080', 
+  origin: 'http://localhost:8080, https://biz-f.codeinges.com', 
   methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
   credentials: true 
 }));
