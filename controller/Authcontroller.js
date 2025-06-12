@@ -67,7 +67,7 @@ const verifyOtp = async (req, res) => {
 
   } catch (error) {
     console.error('Error in verifyOtp:', error);
-    return res.status(500).json({ error: 'Internal server error' });
+    return res.status(500).json({ error: error });
   }
 };
 
@@ -185,10 +185,21 @@ const signIn = async (req, res) => {
   }
 };
 
+const deleteusers = async (req, res) => {
+  try {
+    const result = await User.deleteMany({});
+    res.status(200).json({ message: 'All users cleared', deletedCount: result.deletedCount });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: 'Failed to delete users' });
+  }
+};
+
 module.exports = { 
   withMobile,
   verifyOtp,
   withEmail,
   signUp,
-  signIn
+  signIn,
+  deleteusers
 };

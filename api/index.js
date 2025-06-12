@@ -24,7 +24,7 @@ app.use("/testing2/", testingroutes2);
 
 //root route
 app.get("/", (req, res) => {
-  res.send(`App works properly! Mongo connection ${mongoStatus.message}`);
+  res.send(`App works properlysdfdsf! Mongo connection ${mongoStatus.message}`);
 });
 
 const PORT = process.env.PORT || 5000;
