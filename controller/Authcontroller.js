@@ -16,7 +16,7 @@ const withMobile = async (req, res) => {
     const { mobile } = req.body;
 
     if (!mobile || !/^\d{10}$/.test(mobile)) {
-      return res.status(400).json({ error: 'Invalid or missing mobile number' });
+      return res.status(400).json({ "status": "error",  message: 'Invalid or missing mobile number' });
     }
     const otp = await sendOtpToMobile(mobile);
     await Otp.deleteMany({ mobile });
@@ -40,18 +40,18 @@ const verifyOtp = async (req, res) => {
     const { mobile, otp } = req.body;
 
     if (!mobile || !otp) {
-      return res.status(400).json({ error: 'Mobile and OTP required' });
+      return res.status(400).json({ "status": "error",  message: 'Mobile and OTP required' });
     }
 
     const otpDoc = await Otp.findOne({ mobile, otp });
 
     if (!otpDoc) {
-      return res.status(400).json({ error: 'Invalid OTP' });
+      return res.status(400).json({ "status": "error",  message: 'Invalid OTP' });
     }
 
     if (otpDoc.expiresAt < new Date()) {
       await Otp.deleteOne({ _id: otpDoc._id });
-      return res.status(400).json({ error: 'OTP expired' });
+      return res.status(400).json({ "status": "error",  message: 'OTP expired' });
     }
 
     const uid = Math.floor(1000000 + Math.random() * 9000000);
@@ -89,7 +89,7 @@ const withEmail = async (req, res) => {
     const { email, mobile } = req.body;
 
     if (!email || !/^\S+@\S+\.\S+$/.test(email)) {
-      return res.status(400).json({ error: 'Invalid or missing email' });
+      return res.status(400).json({ "status": "error",  message: 'Invalid or missing email' });
     }
 
     const mailOptions = {
@@ -112,7 +112,7 @@ const withEmail = async (req, res) => {
     });
   } catch (error) {
     console.error('Error in withEmail:', error);
-    return res.status(500).json({ error: 'Internal server error' });
+    return res.status(500).json({ "status": "error",  message: 'Internal server error' });
   }
 };
 
